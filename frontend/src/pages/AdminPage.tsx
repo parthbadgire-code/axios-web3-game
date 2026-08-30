@@ -36,6 +36,7 @@ export default function AdminPage() {
       setRoomId(room.roomId);
       setRoomCreated(true);
       setRoomState(room.status);
+      socket.emit('joinAdmin', room.roomId);
     };
     const onPlayerList = (list: any[]) => setPlayers(list);
     const onGameState = (update: any) => {

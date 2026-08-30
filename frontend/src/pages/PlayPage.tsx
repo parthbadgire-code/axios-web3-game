@@ -7,7 +7,7 @@ import AssetCard from '../components/player/AssetCard';
 type GamePhase = 'LOBBY' | 'MINTING' | 'MARKET_EVENT' | 'DECISION' | 'LEADERBOARD' | 'REVEAL';
 
 // ─── LOBBY SCREEN ─────────────────────────────────────────────────────────────
-function LobbyScreen({ username, players }: { username: string; players: any[] }) {
+function LobbyScreen({ username, playerCount }: { username: string; playerCount: number }) {
   const [dots, setDots] = useState('');
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function LobbyScreen({ username, players }: { username: string; players: any[] }
         {/* Live player count */}
         <div className="glass" style={{ padding: '14px 24px', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', gap: '16px' }}>
           <div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--gold)', lineHeight: 1 }}>{players.length}</div>
+            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--gold)', lineHeight: 1 }}>{playerCount}</div>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Players</div>
           </div>
           <div style={{ width: '1px', height: '32px', background: 'var(--border)' }} />
@@ -278,8 +278,8 @@ function DecisionScreen({ playerData, onAction }: { playerData: any; onAction: (
 }
 
 // ─── LEADERBOARD SCREEN ───────────────────────────────────────────────────────
-function LeaderboardScreen({ players, username, playerData, onShare }: { players: any[]; username: string; playerData: any; onShare: () => void }) {
-  const sorted = [...players].sort((a, b) => (b.score || 0) - (a.score || 0));
+function LeaderboardScreen({ leaderboard, username, playerData, onShare }: { leaderboard: any[]; username: string; playerData: any; onShare: () => void }) {
+  const sorted = leaderboard; // Already sorted by API
   const myRank = sorted.findIndex(p => p.username === username) + 1;
 
   const medals = ['🥇', '🥈', '🥉'];
@@ -442,7 +442,8 @@ export default function PlayPage() {
 
   const [gamePhase, setGamePhase] = useState<GamePhase>('LOBBY');
   const [playerData, setPlayerData] = useState<any>(null);
-  const [players, setPlayers] = useState<any[]>([]);
+  const [playerCount, setPlayerCount] = useState(0);
+  const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [marketEvent, setMarketEvent] = useState<any>(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [showCountdown, setShowCountdown] = useState(false);
@@ -487,7 +488,7 @@ export default function PlayPage() {
 
     const onError = (msg: string) => setErrorMsg(msg);
     const onJoined = (data: any) => setPlayerData(data);
-    const onPlayerList = (list: any[]) => setPlayers(list);
+    const onPlayerCount = (count: number) => setPlayerCount(count);
     // Server sends fresh personal player data when the room state changes
     const onPlayerDataUpdate = (data: any) => setPlayerData(data);
 
@@ -501,6 +502,11 @@ export default function PlayPage() {
           setPlayerData((prev: any) => prev ? { ...prev, asset: null, score: 0, actionTaken: null } : prev);
         }
         setGamePhase(status as GamePhase);
+        if (status === 'LEADERBOARD') {
+          fetch(`${import.meta.env.VITE_SOCKET_URL || 'http://localhost:4000'}/api/room/${roomId}/leaderboard`)
+            .then(r => r.json())
+            .then(data => setLeaderboard(data));
+        }
       }
       if (event) setMarketEvent(event);
     };
@@ -509,7 +515,7 @@ export default function PlayPage() {
 
     socket.on('gameError', onError);
     socket.on('joined', onJoined);
-    socket.on('playerListUpdate', onPlayerList);
+    socket.on('playerCountUpdate', onPlayerCount);
     socket.on('playerDataUpdate', onPlayerDataUpdate);
     socket.on('gameStateUpdate', onGameState);
     socket.on('assetMinted', onAssetMinted);
@@ -521,7 +527,7 @@ export default function PlayPage() {
     return () => {
       socket.off('gameError', onError);
       socket.off('joined', onJoined);
-      socket.off('playerListUpdate', onPlayerList);
+      socket.off('playerCountUpdate', onPlayerCount);
       socket.off('playerDataUpdate', onPlayerDataUpdate);
       socket.off('gameStateUpdate', onGameState);
       socket.off('assetMinted', onAssetMinted);
@@ -585,7 +591,7 @@ export default function PlayPage() {
 
       {/* Phase content */}
       {gamePhase === 'LOBBY' && (
-        <LobbyScreen username={playerData.username} players={players} />
+        <LobbyScreen username={playerData.username} playerCount={playerCount} />
       )}
 
       {/* Show MintingPhase only when there is NO minted asset (uniqueId = proof of mint) */}
@@ -610,7 +616,12 @@ export default function PlayPage() {
       )}
 
       {gamePhase === 'LEADERBOARD' && (
-        <LeaderboardScreen players={players} username={playerData.username} playerData={playerData} onShare={handleShare} />
+        <LeaderboardScreen
+          leaderboard={leaderboard}
+          username={playerData.username}
+          playerData={playerData}
+          onShare={handleShare}
+        />
       )}
 
       {gamePhase === 'REVEAL' && (

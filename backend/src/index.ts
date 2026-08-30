@@ -135,11 +135,28 @@ app.get('/api/room/:roomId/leaderboard', async (req, res) => {
   }
 });
 
+
 // ─── SOCKET.IO ────────────────────────────────────────────────────────────────
 const mintStartTimes: Record<string, number> = {}; // track when minting phase started per room
 
+// HELPER: Safely broadcast without O(N^2) explosion
+async function broadcastPlayerUpdates(roomId: string) {
+  const players = await Player.find({ roomId });
+  io.to('admin-' + roomId).emit('playerListUpdate', players);
+  io.to(roomId).emit('playerCountUpdate', players.length);
+  return players;
+}
+
+
 io.on('connection', (socket) => {
   console.log('🔌 Connected:', socket.id);
+
+  // HOST ONLY: Join admin room to receive heavy playerList updates
+  socket.on('joinAdmin', (roomId: string) => {
+    const cleanId = roomId.toUpperCase().trim();
+    socket.join('admin-' + cleanId);
+    console.log(`👑 Admin joined: admin-${cleanId}`);
+  });
 
   // HOST: create or bind room
   socket.on('createRoom', async (roomId: string) => {
@@ -183,8 +200,7 @@ io.on('connection', (socket) => {
         await existing.save();
         socket.join(cleanId);
         socket.emit('joined', existing.toObject());
-        const players = await Player.find({ roomId: cleanId });
-        io.to(cleanId).emit('playerListUpdate', players);
+        const players = await broadcastPlayerUpdates(cleanId);
         socket.emit('gameStateUpdate', { status: room.status, marketEvent: room.marketEvent });
         console.log(`🔄 Reconnected: ${cleanUsername}`);
         return;
@@ -194,8 +210,7 @@ io.on('connection', (socket) => {
         // Same socket re-joining (e.g., PlayPage re-mount)
         socket.join(cleanId);
         socket.emit('joined', existing.toObject());
-        const players = await Player.find({ roomId: cleanId });
-        io.to(cleanId).emit('playerListUpdate', players);
+        const players = await broadcastPlayerUpdates(cleanId);
         socket.emit('gameStateUpdate', { status: room.status, marketEvent: room.marketEvent });
         return;
       }
@@ -214,8 +229,7 @@ io.on('connection', (socket) => {
 
       socket.join(cleanId);
       socket.emit('joined', player.toObject());
-      const players = await Player.find({ roomId: cleanId });
-      io.to(cleanId).emit('playerListUpdate', players);
+      const players = await broadcastPlayerUpdates(cleanId);
       socket.emit('gameStateUpdate', { status: room.status, marketEvent: room.marketEvent });
       console.log(`👤 Joined: ${cleanUsername} → ${cleanId}`);
     } catch (err) {
@@ -284,7 +298,8 @@ io.on('connection', (socket) => {
       await Player.deleteMany({ roomId: cleanId });
       delete mintStartTimes[cleanId];
       io.to(cleanId).emit('gameStateUpdate', { status: 'LOBBY', marketEvent: null });
-      io.to(cleanId).emit('playerListUpdate', []);
+      io.to('admin-' + cleanId).emit('playerListUpdate', []);
+      io.to(cleanId).emit('playerCountUpdate', 0);
       console.log(`🗑️ Room ${cleanId} reset`);
     } catch (err) {
       console.error('resetRoom error:', err);
@@ -331,8 +346,7 @@ io.on('connection', (socket) => {
       );
 
       socket.emit('assetMinted', player!.toObject());
-      const players = await Player.find({ roomId: cleanId });
-      io.to(cleanId).emit('playerListUpdate', players);
+      const players = await broadcastPlayerUpdates(cleanId);
       console.log(`🎨 Minted: ${username} → ${uniqueId} (score: ${score})`);
     } catch (err) {
       console.error('mintAsset error:', err);
@@ -362,8 +376,7 @@ io.on('connection', (socket) => {
       );
 
       socket.emit('actionConfirmed', updated!.toObject());
-      const players = await Player.find({ roomId: cleanId });
-      io.to(cleanId).emit('playerListUpdate', players);
+      const players = await broadcastPlayerUpdates(cleanId);
     } catch (err) {
       console.error('playerAction error:', err);
     }
@@ -379,8 +392,7 @@ io.on('connection', (socket) => {
         { returnDocument: 'after' }
       );
       if (player) {
-        const players = await Player.find({ roomId: player.roomId });
-        io.to(player.roomId).emit('playerListUpdate', players);
+        const players = await broadcastPlayerUpdates(player.roomId);
       }
     } catch (err) {}
   });
