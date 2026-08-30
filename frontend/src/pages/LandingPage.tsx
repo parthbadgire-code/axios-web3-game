@@ -7,7 +7,7 @@ function Particle({ style }: { style: React.CSSProperties }) {
     <div style={{
       position: 'absolute',
       borderRadius: '50%',
-      background: 'linear-gradient(135deg, rgba(0,240,255,0.4), rgba(168,85,247,0.4))',
+      background: 'linear-gradient(135deg, rgba(251,191,36,0.4), rgba(255,187,166,0.4))',
       filter: 'blur(1px)',
       animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
       animationDelay: `${Math.random() * 3}s`,
@@ -38,13 +38,13 @@ export default function LandingPage() {
       <div style={{
         position: 'fixed', top: '20%', right: '10%',
         width: '300px', height: '300px',
-        background: 'radial-gradient(circle, rgba(0,240,255,0.12) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(251,191,36,0.12) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
       <div style={{
         position: 'fixed', bottom: '20%', left: '5%',
         width: '400px', height: '400px',
-        background: 'radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(255,187,166,0.1) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -66,9 +66,9 @@ export default function LandingPage() {
         {/* Tagline */}
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', margin: '16px 0 8px', color: 'rgba(255,255,255,0.5)', fontWeight: 700, letterSpacing: '0.2em', fontSize: '0.9rem' }}>
           <span>MINT</span>
-          <span style={{ color: 'var(--cyan)' }}>//</span>
+          <span style={{ color: 'var(--gold)' }}>//</span>
           <span>RANK</span>
-          <span style={{ color: 'var(--cyan)' }}>//</span>
+          <span style={{ color: 'var(--gold)' }}>//</span>
           <span>WIN</span>
         </div>
 
@@ -99,7 +99,7 @@ export default function LandingPage() {
         </div>
 
         <p style={{ fontSize: '0.72rem', color: 'var(--text-3)' }}>
-          Developed with ❤️ by <strong style={{ color: 'var(--cyan)' }}>Web3 Wing</strong>, Axios · IIITL
+          Developed with ❤️ by <strong style={{ color: 'var(--gold)' }}>Web3 Wing</strong>, Axios · IIITL
         </p>
       </div>
     </div>

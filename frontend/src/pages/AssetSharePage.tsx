@@ -50,7 +50,7 @@ export default function AssetSharePage() {
   if (loading) {
     return (
       <div className="page-center" style={{ textAlign: 'center' }}>
-        <div style={{ width: '48px', height: '48px', border: '3px solid rgba(0,240,255,0.2)', borderTopColor: 'var(--cyan)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 20px' }} />
+        <div style={{ width: '48px', height: '48px', border: '3px solid rgba(251,191,36,0.2)', borderTopColor: 'var(--gold)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 20px' }} />
         <p className="text-muted">Loading asset...</p>
       </div>
     );
@@ -109,7 +109,7 @@ export default function AssetSharePage() {
               disabled={downloading}
             >
               {downloading ? (
-                <><span className="animate-spin" style={{ display: 'inline-block', borderRadius: '50%', width: '16px', height: '16px', border: '2px solid rgba(0,240,255,0.3)', borderTopColor: 'var(--cyan)' }} /> Generating...</>
+                <><span className="animate-spin" style={{ display: 'inline-block', borderRadius: '50%', width: '16px', height: '16px', border: '2px solid rgba(251,191,36,0.3)', borderTopColor: 'var(--gold)' }} /> Generating...</>
               ) : '⬇ Download as Image'}
             </button>
             <button className="btn btn-full" onClick={copyLink}>
@@ -122,7 +122,7 @@ export default function AssetSharePage() {
             <p className="text-xs text-dim" style={{ lineHeight: 1.7 }}>
               This asset was "minted" during the <strong style={{ color: 'var(--text-2)' }}>AXIOS Web3 Wing Orientation</strong>.<br />
               Want to learn how to build real NFTs and blockchain apps?<br />
-              <strong style={{ color: 'var(--cyan)' }}>Join AXIOS Web3 Wing lectures! 🚀</strong>
+              <strong style={{ color: 'var(--gold)' }}>Join AXIOS Web3 Wing lectures! 🚀</strong>
             </p>
           </div>
         </div>

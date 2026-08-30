@@ -91,8 +91,8 @@ export default function MintingPhase({ username, web3Address, onMint }: MintingP
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: '32px', padding: '40px 20px', textAlign: 'center' }}>
         <div style={{
           width: '80px', height: '80px',
-          border: '3px solid rgba(0,240,255,0.2)',
-          borderTopColor: 'var(--cyan)',
+          border: '3px solid rgba(251,191,36,0.2)',
+          borderTopColor: 'var(--gold)',
           borderRadius: '50%',
           animation: 'spin 1s linear infinite',
         }} />
@@ -100,7 +100,7 @@ export default function MintingPhase({ username, web3Address, onMint }: MintingP
         <div>
           <p style={{ color: 'var(--text-3)', fontSize: '0.8rem', letterSpacing: '0.15em', marginBottom: '16px', textTransform: 'uppercase' }}>
             {MINT_STEPS.slice(0, mintStep + 1).map((s, i) => (
-              <span key={s} style={{ display: 'block', color: i === mintStep ? 'var(--cyan)' : 'var(--text-3)', transition: 'all 0.3s', fontWeight: i === mintStep ? 700 : 400 }}>
+              <span key={s} style={{ display: 'block', color: i === mintStep ? 'var(--gold)' : 'var(--text-3)', transition: 'all 0.3s', fontWeight: i === mintStep ? 700 : 400 }}>
                 {i === mintStep ? '→ ' : '✓ '}{s}
               </span>
             ))}
@@ -162,7 +162,7 @@ export default function MintingPhase({ username, web3Address, onMint }: MintingP
         <div>
           <div className="text-xs text-dim" style={{ textTransform: 'uppercase', letterSpacing: '0.1em' }}>Balance</div>
           <div style={{ fontWeight: 800, fontSize: '1.1rem' }}>
-            100 <span style={{ color: 'var(--cyan)', fontSize: '0.75rem' }}>$AXIOS</span>
+            100 <span style={{ color: 'var(--gold)', fontSize: '0.75rem' }}>$AXIOS</span>
           </div>
         </div>
         <div style={{ textAlign: 'right' }}>
@@ -181,30 +181,32 @@ export default function MintingPhase({ username, web3Address, onMint }: MintingP
 
         {/* STEP 1: Choose Core */}
         <div style={{ marginBottom: '28px' }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '12px' }}>
+          <h3 style={{ fontSize: '1.05rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '16px' }}>
             1. Choose Core
           </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             {CORES.map(c => (
               <button
                 key={c.name}
                 onClick={() => setCore(c.name)}
                 style={{
                   background: core === c.name ? 'var(--bg-card-h)' : 'var(--bg-card)',
-                  border: `1.5px solid ${core === c.name ? 'rgba(0,240,255,0.5)' : 'var(--border)'}`,
-                  borderRadius: '12px',
-                  padding: '14px 12px',
+                  border: `1.5px solid ${core === c.name ? 'rgba(251,191,36,0.6)' : 'var(--border)'}`,
+                  borderRadius: '16px',
+                  padding: '20px 16px',
                   cursor: 'pointer',
                   color: 'var(--text)',
                   textAlign: 'left',
                   transition: 'all 0.2s',
                   backdropFilter: 'blur(8px)',
                   outline: 'none',
+                  boxShadow: core === c.name ? '0 8px 24px rgba(251,191,36,0.1)' : 'none',
+                  transform: core === c.name ? 'translateY(-2px)' : 'none'
                 }}
               >
-                <div style={{ fontSize: '1.4rem', marginBottom: '4px' }}>{c.emoji}</div>
-                <div style={{ fontWeight: 800, fontSize: '0.95rem', letterSpacing: '0.05em' }}>{c.name}</div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-3)', marginTop: '2px' }}>{c.desc}</div>
+                <div style={{ fontSize: '1.8rem', marginBottom: '8px' }}>{c.emoji}</div>
+                <div style={{ fontWeight: 800, fontSize: '1.05rem', letterSpacing: '0.05em' }}>{c.name}</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-3)', marginTop: '4px' }}>{c.desc}</div>
               </button>
             ))}
           </div>
@@ -212,14 +214,14 @@ export default function MintingPhase({ username, web3Address, onMint }: MintingP
 
         {/* STEP 2: Choose Traits */}
         <div style={{ marginBottom: '28px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-            <h3 style={{ fontSize: '1rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0 }}>
               2. Choose Traits
             </h3>
-            <span className="badge badge-cyan" style={{ fontSize: '0.65rem' }}>{selectedTraits.length}/2</span>
+            <span className="badge badge-gold" style={{ fontSize: '0.75rem', padding: '6px 12px' }}>{selectedTraits.length}/2</span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {TRAITS.map(t => {
               const isSelected = selectedTraits.includes(t.name);
               const canAfford = remaining >= t.cost || isSelected;
@@ -232,16 +234,18 @@ export default function MintingPhase({ username, web3Address, onMint }: MintingP
                   key={t.name}
                   onClick={() => !disabled && toggleTrait(t.name)}
                   style={{
-                    background: isSelected ? 'rgba(0,240,255,0.06)' : disabled ? 'rgba(255,255,255,0.02)' : 'var(--bg-card)',
-                    border: `1px solid ${isSelected ? 'rgba(0,240,255,0.4)' : 'var(--border)'}`,
-                    borderRadius: '12px',
-                    padding: '14px 16px',
+                    background: isSelected ? 'rgba(251,191,36,0.08)' : disabled ? 'rgba(255,255,255,0.02)' : 'var(--bg-card)',
+                    border: `1.5px solid ${isSelected ? 'rgba(251,191,36,0.5)' : 'var(--border)'}`,
+                    borderRadius: '16px',
+                    padding: '16px 20px',
                     cursor: disabled ? 'not-allowed' : 'pointer',
                     opacity: disabled ? 0.4 : 1,
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px',
+                    gap: '16px',
                     transition: 'all 0.2s',
+                    boxShadow: isSelected ? '0 8px 24px rgba(251,191,36,0.1)' : 'none',
+                    transform: isSelected ? 'translateY(-2px)' : 'none'
                   }}
                 >
                   <span style={{ fontSize: '1.5rem' }}>{t.emoji}</span>
@@ -250,13 +254,13 @@ export default function MintingPhase({ username, web3Address, onMint }: MintingP
                     <div style={{ fontSize: '0.7rem', color: rarityColor, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t.rarity}</div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontWeight: 800, color: isSelected ? 'var(--cyan)' : 'var(--text-2)' }}>
+                    <div style={{ fontWeight: 800, color: isSelected ? 'var(--gold)' : 'var(--text-2)' }}>
                       {t.cost}
                     </div>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-3)' }}>$AXIOS</div>
                   </div>
                   {isSelected && (
-                    <div style={{ width: '20px', height: '20px', background: 'var(--cyan)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', color: '#000', fontWeight: 900, flexShrink: 0 }}>
+                    <div style={{ width: '20px', height: '20px', background: 'var(--gold)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', color: '#000', fontWeight: 900, flexShrink: 0 }}>
                       ✓
                     </div>
                   )}

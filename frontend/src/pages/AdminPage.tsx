@@ -132,7 +132,7 @@ export default function AdminPage() {
           <div style={{ background: 'white', padding: '24px', borderRadius: '20px' }}>
             <QRCodeSVG value={joinUrl} size={350} />
           </div>
-          <p style={{ marginTop: '32px', color: 'var(--cyan)', fontSize: '1.1rem', fontWeight: 700 }}>
+          <p style={{ marginTop: '32px', color: 'var(--gold)', fontSize: '1.1rem', fontWeight: 700 }}>
             ROOM: {roomId}
           </p>
           <p style={{ marginTop: '16px', color: 'var(--text-3)', fontSize: '0.8rem' }}>
@@ -158,7 +158,7 @@ export default function AdminPage() {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {roomCreated && (
-            <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.9rem', color: 'var(--cyan)', background: 'var(--cyan-dim)', padding: '4px 12px', borderRadius: '6px' }}>
+            <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.9rem', color: 'var(--gold)', background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '6px' }}>
               {roomId}
             </span>
           )}
@@ -205,9 +205,9 @@ export default function AdminPage() {
               {/* Stats */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                 {[
-                  { label: 'Players', value: players.length, color: 'var(--cyan)' },
+                  { label: 'Players', value: players.length, color: 'var(--gold)' },
                   { label: 'Online', value: onlineCount, color: 'var(--energy)' },
-                  { label: 'Minted', value: mintedCount, color: 'var(--purple)' },
+                  { label: 'Minted', value: mintedCount, color: 'var(--peach)' },
                   { label: 'Phase', value: currentPhaseIndex + 1 + '/6', color: '#fbbf24' },
                 ].map(s => (
                   <div key={s.label} className="glass" style={{ padding: '14px', borderRadius: '12px', textAlign: 'center' }}>
@@ -247,9 +247,9 @@ export default function AdminPage() {
                         className="btn"
                         style={{
                           justifyContent: 'flex-start', gap: '10px', padding: '10px 14px',
-                          borderColor: isActive ? 'var(--cyan)' : isDone ? 'rgba(74,222,128,0.3)' : 'var(--border)',
-                          background: isActive ? 'rgba(0,240,255,0.1)' : isDone ? 'rgba(74,222,128,0.05)' : 'transparent',
-                          color: isActive ? 'var(--cyan)' : isDone ? 'var(--energy)' : 'var(--text-2)',
+                          borderColor: isActive ? 'var(--gold)' : isDone ? 'rgba(74,222,128,0.3)' : 'var(--border)',
+                          background: isActive ? 'rgba(251,191,36,0.1)' : isDone ? 'rgba(74,222,128,0.05)' : 'transparent',
+                          color: isActive ? 'var(--gold)' : isDone ? 'var(--energy)' : 'var(--text-2)',
                           textTransform: 'none', letterSpacing: 'normal', fontWeight: isActive ? 800 : 500,
                           fontSize: '0.85rem',
                         }}
@@ -322,9 +322,9 @@ export default function AdminPage() {
                 {PHASES.map((p, i) => (
                   <div key={p.key} style={{
                     padding: '6px 14px', borderRadius: '100px', fontSize: '0.75rem', fontWeight: 700,
-                    background: roomState === p.key ? 'linear-gradient(135deg, rgba(0,240,255,0.2), rgba(168,85,247,0.2))' : 'transparent',
-                    border: `1px solid ${roomState === p.key ? 'rgba(0,240,255,0.5)' : 'var(--border)'}`,
-                    color: roomState === p.key ? 'var(--cyan)' : 'var(--text-3)',
+                    background: roomState === p.key ? 'linear-gradient(135deg, rgba(251,191,36,0.2), rgba(255,187,166,0.2))' : 'transparent',
+                    border: `1px solid ${roomState === p.key ? 'rgba(251,191,36,0.5)' : 'var(--border)'}`,
+                    color: roomState === p.key ? 'var(--gold)' : 'var(--text-3)',
                   }}>
                     {p.emoji} {p.label}
                   </div>
@@ -374,8 +374,8 @@ export default function AdminPage() {
                             <td style={{ padding: '12px 16px', fontSize: '0.8rem', color: 'var(--text-2)' }}>
                               {p.asset?.traits?.join(', ') || <span style={{ color: 'var(--text-3)' }}>—</span>}
                             </td>
-                            <td style={{ padding: '12px 16px', fontWeight: 800, color: 'var(--cyan)' }}>{p.score ? p.score.toLocaleString() : 0}</td>
-                            <td style={{ padding: '12px 16px', fontSize: '0.8rem', color: p.actionTaken === 'HOLD' ? 'var(--purple)' : p.actionTaken === 'SELL' ? '#f87171' : 'var(--text-3)' }}>
+                            <td style={{ padding: '12px 16px', fontWeight: 800, color: 'var(--gold)' }}>{p.score ? p.score.toLocaleString() : 0}</td>
+                            <td style={{ padding: '12px 16px', fontSize: '0.8rem', color: p.actionTaken === 'HOLD' ? 'var(--peach)' : p.actionTaken === 'SELL' ? '#f87171' : 'var(--text-3)' }}>
                               {p.actionTaken || '—'}
                             </td>
                           </tr>
@@ -405,7 +405,7 @@ export default function AdminPage() {
                         </span>
                         <span style={{ flex: 1, fontWeight: 700 }}>@{p.username}</span>
                         {p.asset && <span className="text-xs text-muted">{p.asset.core}</span>}
-                        <span style={{ fontWeight: 800, color: i === 0 ? '#fbbf24' : 'var(--cyan)' }}>
+                        <span style={{ fontWeight: 800, color: i === 0 ? '#fbbf24' : 'var(--gold)' }}>
                           {(p.score || 0).toLocaleString()}
                         </span>
                       </div>
@@ -430,7 +430,7 @@ export default function AdminPage() {
                         <div style={{ fontSize: '1.8rem', marginBottom: '8px' }}>{w.emoji}</div>
                         <div style={{ fontWeight: 800, fontSize: '0.85rem', marginBottom: '4px' }}>{w.title}</div>
                         <div className="text-xs text-dim" style={{ marginBottom: '8px' }}>{w.desc}</div>
-                        <div style={{ fontWeight: 700, color: 'var(--cyan)', fontSize: '0.9rem' }}>
+                        <div style={{ fontWeight: 700, color: 'var(--gold)', fontSize: '0.9rem' }}>
                           {w.player ? `@${w.player.username}` : '—'}
                         </div>
                       </div>
@@ -455,12 +455,12 @@ export default function AdminPage() {
                   ].map(c => (
                     <div key={c.game} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
                       <span style={{ color: 'var(--text-2)' }}>{c.emoji} {c.game}</span>
-                      <span style={{ fontWeight: 800, color: 'var(--cyan)' }}>= {c.web3}</span>
+                      <span style={{ fontWeight: 800, color: 'var(--gold)' }}>= {c.web3}</span>
                     </div>
                   ))}
-                  <div style={{ marginTop: '32px', padding: '24px', background: 'linear-gradient(135deg, rgba(0,240,255,0.1), rgba(168,85,247,0.1))', borderRadius: '14px', border: '1px solid rgba(0,240,255,0.3)' }}>
+                  <div style={{ marginTop: '32px', padding: '24px', background: 'linear-gradient(135deg, rgba(251,191,36,0.1), rgba(255,187,166,0.1))', borderRadius: '14px', border: '1px solid rgba(251,191,36,0.3)' }}>
                     <h3 style={{ fontSize: '1.4rem', fontWeight: 900, marginBottom: '8px' }}>Want to build the real thing?</h3>
-                    <p style={{ color: 'var(--text-2)' }}>Attend <strong style={{ color: 'var(--cyan)' }}>AXIOS Web3 Wing</strong> lectures!</p>
+                    <p style={{ color: 'var(--text-2)' }}>Attend <strong style={{ color: 'var(--gold)' }}>AXIOS Web3 Wing</strong> lectures!</p>
                   </div>
                 </div>
               )}

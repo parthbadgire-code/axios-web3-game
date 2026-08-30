@@ -29,14 +29,14 @@ function LobbyScreen({ username, players }: { username: string; players: any[] }
       <div style={{ textAlign: 'center', marginBottom: '28px' }}>
         <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🎉</div>
         <h1 style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '8px' }}>YOU'RE IN!</h1>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(0,240,255,0.1)', border: '1px solid rgba(0,240,255,0.3)', borderRadius: '100px', padding: '6px 20px', marginBottom: '16px' }}>
-          <span style={{ color: 'var(--cyan)', fontWeight: 700, fontSize: '1.05rem' }}>@{username}</span>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.3)', borderRadius: '100px', padding: '6px 20px', marginBottom: '16px' }}>
+          <span style={{ color: 'var(--gold)', fontWeight: 700, fontSize: '1.05rem' }}>@{username}</span>
         </div>
 
         {/* Live player count */}
         <div className="glass" style={{ padding: '14px 24px', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', gap: '16px' }}>
           <div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--cyan)', lineHeight: 1 }}>{players.length}</div>
+            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--gold)', lineHeight: 1 }}>{players.length}</div>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Players</div>
           </div>
           <div style={{ width: '1px', height: '32px', background: 'var(--border)' }} />
@@ -61,12 +61,12 @@ function LobbyScreen({ username, players }: { username: string; players: any[] }
               padding: '14px 16px',
               animation: `slideIn ${0.1 + i * 0.08}s ease-out`,
             }}>
-              <div style={{ flexShrink: 0, width: '36px', height: '36px', background: 'rgba(0,240,255,0.08)', border: '1px solid rgba(0,240,255,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}>
+              <div style={{ flexShrink: 0, width: '36px', height: '36px', background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}>
                 {s.emoji}
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                  <span style={{ fontSize: '0.6rem', fontWeight: 800, color: 'var(--cyan)', letterSpacing: '0.1em', opacity: 0.6 }}>PHASE {s.phase}</span>
+                  <span style={{ fontSize: '0.6rem', fontWeight: 800, color: 'var(--gold)', letterSpacing: '0.1em', opacity: 0.6 }}>PHASE {s.phase}</span>
                   <span style={{ fontWeight: 800, fontSize: '0.9rem' }}>{s.title}</span>
                 </div>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-2)', lineHeight: 1.55, margin: 0 }}>{s.desc}</p>
@@ -95,7 +95,7 @@ function LobbyScreen({ username, players }: { username: string; players: any[] }
       {/* Footer */}
       <div style={{ textAlign: 'center', padding: '12px 0' }}>
         <p style={{ fontSize: '0.72rem', color: 'var(--text-3)', lineHeight: 1.8 }}>
-          Developed with ❤️ by <strong style={{ color: 'var(--cyan)' }}>Web3 Wing</strong>, Axios · IIITL
+          Developed with ❤️ by <strong style={{ color: 'var(--gold)' }}>Web3 Wing</strong>, Axios · IIITL
         </p>
       </div>
     </div>
@@ -131,14 +131,14 @@ function CountdownOverlay({ onDone }: { onDone: () => void }) {
         fontSize: 'clamp(6rem, 30vw, 12rem)',
         fontWeight: 900,
         lineHeight: 1,
-        background: 'linear-gradient(135deg, var(--cyan), var(--purple))',
+        background: 'linear-gradient(135deg, var(--gold), var(--peach))',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         animation: 'bounceIn 0.4s ease-out',
       }}>
         {count || '🚀'}
       </div>
-      {count === 0 && <p style={{ marginTop: '24px', fontSize: '1.5rem', color: 'var(--cyan)' }}>MINT TIME!</p>}
+      {count === 0 && <p style={{ marginTop: '24px', fontSize: '1.5rem', color: 'var(--gold)' }}>MINT TIME!</p>}
     </div>
   );
 }
@@ -170,11 +170,11 @@ function MintedScreen({ playerData }: { playerData: any }) {
       <div className="glass" style={{ padding: '20px', borderRadius: '14px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', textAlign: 'center' }}>
         <div>
           <div className="text-xs text-dim" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>Your Score</div>
-          <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--cyan)' }}>{playerData.score}</div>
+          <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--gold)' }}>{playerData.score}</div>
         </div>
         <div>
           <div className="text-xs text-dim" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>Rarity</div>
-          <div style={{ fontSize: '1.1rem', fontWeight: 800, color: playerData.asset.rarity === 'Legendary' ? '#fbbf24' : 'var(--purple)' }}>
+          <div style={{ fontSize: '1.1rem', fontWeight: 800, color: playerData.asset.rarity === 'Legendary' ? '#fbbf24' : 'var(--peach)' }}>
             {playerData.asset.rarity || '—'}
           </div>
         </div>
@@ -242,7 +242,7 @@ function DecisionScreen({ playerData, onAction }: { playerData: any; onAction: (
         <div style={{ fontSize: '3.5rem', fontWeight: 900, lineHeight: 1 }}>
           <span className="gradient-text">{(playerData.score || 0).toLocaleString()}</span>
         </div>
-        <div style={{ color: 'var(--cyan)', fontWeight: 700, marginTop: '4px' }}>$AXIOS</div>
+        <div style={{ color: 'var(--gold)', fontWeight: 700, marginTop: '4px' }}>$AXIOS</div>
       </div>
 
       {playerData.asset && (
@@ -292,8 +292,8 @@ function LeaderboardScreen({ players, username, playerData, onShare }: { players
           <span className="gradient-text">FINAL RANKINGS</span>
         </h2>
         {myRank > 0 && (
-          <div style={{ display: 'inline-block', background: 'rgba(0,240,255,0.1)', border: '1px solid rgba(0,240,255,0.3)', borderRadius: '100px', padding: '6px 16px' }}>
-            <span style={{ color: 'var(--cyan)', fontWeight: 700 }}>Your rank: #{myRank}</span>
+          <div style={{ display: 'inline-block', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.3)', borderRadius: '100px', padding: '6px 16px' }}>
+            <span style={{ color: 'var(--gold)', fontWeight: 700 }}>Your rank: #{myRank}</span>
           </div>
         )}
       </div>
@@ -301,8 +301,8 @@ function LeaderboardScreen({ players, username, playerData, onShare }: { players
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '28px' }}>
         {sorted.slice(0, 10).map((p, i) => (
           <div key={p.username} style={{
-            background: p.username === username ? 'rgba(0,240,255,0.08)' : i < 3 ? 'rgba(255,255,255,0.03)' : 'transparent',
-            border: `1px solid ${p.username === username ? 'rgba(0,240,255,0.4)' : 'var(--border)'}`,
+            background: p.username === username ? 'rgba(251,191,36,0.08)' : i < 3 ? 'rgba(255,255,255,0.03)' : 'transparent',
+            border: `1px solid ${p.username === username ? 'rgba(251,191,36,0.4)' : 'var(--border)'}`,
             borderRadius: '12px',
             padding: '12px 16px',
             display: 'flex',
@@ -316,7 +316,7 @@ function LeaderboardScreen({ players, username, playerData, onShare }: { players
             <div style={{ flex: 1 }}>
               <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>
                 {p.username}
-                {p.username === username && <span style={{ marginLeft: '8px', color: 'var(--cyan)', fontSize: '0.7rem' }}>YOU</span>}
+                {p.username === username && <span style={{ marginLeft: '8px', color: 'var(--gold)', fontSize: '0.7rem' }}>YOU</span>}
               </div>
               {p.asset && (
                 <div style={{ fontSize: '0.7rem', color: 'var(--text-3)' }}>
@@ -324,7 +324,7 @@ function LeaderboardScreen({ players, username, playerData, onShare }: { players
                 </div>
               )}
             </div>
-            <div style={{ fontWeight: 800, color: i === 0 ? '#fbbf24' : 'var(--cyan)', fontSize: '1rem', flexShrink: 0 }}>
+            <div style={{ fontWeight: 800, color: i === 0 ? '#fbbf24' : 'var(--gold)', fontSize: '1rem', flexShrink: 0 }}>
               {(p.score || 0).toLocaleString()}
             </div>
           </div>
@@ -385,7 +385,7 @@ function RevealScreen() {
               <div className="text-sm text-muted">{c.game}</div>
             </div>
             <div style={{ textAlign: 'right', flexShrink: 0 }}>
-              <div style={{ fontWeight: 800, color: 'var(--cyan)', fontSize: '0.9rem' }}>= {c.web3}</div>
+              <div style={{ fontWeight: 800, color: 'var(--gold)', fontSize: '0.9rem' }}>= {c.web3}</div>
             </div>
           </div>
         ))}
@@ -401,8 +401,8 @@ function RevealScreen() {
           </div>
 
           <div style={{
-            background: 'linear-gradient(135deg, rgba(0,240,255,0.12), rgba(168,85,247,0.12))',
-            border: '1px solid rgba(0,240,255,0.35)',
+            background: 'linear-gradient(135deg, rgba(251,191,36,0.12), rgba(255,187,166,0.12))',
+            border: '1px solid rgba(251,191,36,0.35)',
             borderRadius: '16px',
             padding: '28px 20px',
             textAlign: 'center',
@@ -413,19 +413,19 @@ function RevealScreen() {
               Want to know more?
             </h3>
             <p style={{ color: 'var(--text-2)', marginBottom: '16px', lineHeight: 1.7, fontSize: '1rem' }}>
-              Attend <strong style={{ color: 'var(--cyan)', fontSize: '1.05rem' }}>AXIOS Web3 Wing</strong> lectures<br />
+              Attend <strong style={{ color: 'var(--gold)', fontSize: '1.05rem' }}>AXIOS Web3 Wing</strong> lectures<br />
               and learn how to build real blockchain apps.
             </p>
-            <div style={{ display: 'inline-flex', gap: '8px', alignItems: 'center', background: 'rgba(0,240,255,0.1)', border: '1px solid rgba(0,240,255,0.3)', borderRadius: '100px', padding: '8px 20px' }}>
+            <div style={{ display: 'inline-flex', gap: '8px', alignItems: 'center', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.3)', borderRadius: '100px', padding: '8px 20px' }}>
               <span style={{ fontSize: '1rem' }}>⬡</span>
-              <span style={{ fontWeight: 800, color: 'var(--cyan)', letterSpacing: '0.05em', fontSize: '0.9rem' }}>AXIOS · WEB3 WING · IIITL</span>
+              <span style={{ fontWeight: 800, color: 'var(--gold)', letterSpacing: '0.05em', fontSize: '0.9rem' }}>AXIOS · WEB3 WING · IIITL</span>
             </div>
           </div>
 
           {/* Footer */}
           <div style={{ textAlign: 'center', padding: '8px 0' }}>
             <p style={{ fontSize: '0.72rem', color: 'var(--text-3)', lineHeight: 1.8 }}>
-              Developed with ❤️ by <strong style={{ color: 'var(--cyan)' }}>Web3 Wing</strong>, Axios · IIITL
+              Developed with ❤️ by <strong style={{ color: 'var(--gold)' }}>Web3 Wing</strong>, Axios · IIITL
             </p>
           </div>
         </div>
@@ -550,7 +550,7 @@ export default function PlayPage() {
     return (
       <div className="page-center" style={{ textAlign: 'center' }}>
         <div>
-          <div style={{ width: '48px', height: '48px', border: '3px solid rgba(0,240,255,0.2)', borderTopColor: 'var(--cyan)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 20px' }} />
+          <div style={{ width: '48px', height: '48px', border: '3px solid rgba(251,191,36,0.2)', borderTopColor: 'var(--gold)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 20px' }} />
           <p className="text-muted">Connecting to game room...</p>
           <p className="text-xs text-dim" style={{ marginTop: '8px' }}>Room: {roomId}</p>
         </div>
@@ -579,7 +579,7 @@ export default function PlayPage() {
           <span style={{ fontWeight: 700, fontSize: '0.95rem' }}>@{playerData.username}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.75rem', color: 'var(--cyan)', background: 'var(--cyan-dim)', padding: '3px 10px', borderRadius: '4px' }}>{roomId}</span>
+          <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.75rem', color: 'var(--gold)', background: 'var(--gold-dim)', padding: '3px 10px', borderRadius: '4px' }}>{roomId}</span>
         </div>
       </div>
 
