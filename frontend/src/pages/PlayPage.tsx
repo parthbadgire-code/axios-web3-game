@@ -4,7 +4,7 @@ import { useSocket } from '../context/SocketContext';
 import MintingPhase from '../components/player/MintingPhase';
 import AssetCard from '../components/player/AssetCard';
 
-type GamePhase = 'LOBBY' | 'MINTING' | 'MARKET_EVENT' | 'DECISION' | 'LEADERBOARD' | 'REVEAL';
+type GamePhase = 'LOBBY' | 'MINTING' | 'MARKET_EVENT' | 'LEADERBOARD' | 'REVEAL';
 
 // ─── LOBBY SCREEN ─────────────────────────────────────────────────────────────
 function LobbyScreen({ username, playerCount }: { username: string; playerCount: number }) {
@@ -19,8 +19,7 @@ function LobbyScreen({ username, playerCount }: { username: string; playerCount:
     { phase: '01', emoji: '🔗', title: 'Join the Room', desc: 'You\'re already in! Your mock Web3 wallet address has been auto-generated for you.' },
     { phase: '02', emoji: '🎨', title: 'Mint Your Asset', desc: 'You\'ll get 100 $AXIOS. Pick a Core type (ICE, FIRE, VOID, ENERGY) and up to 2 Traits. Spend wisely — rarer traits cost more!' },
     { phase: '03', emoji: '⚡', title: 'Market Event', desc: 'The market shifts! Certain cores or traits spike in value. Watch what the host announces on screen.' },
-    { phase: '04', emoji: '💎', title: 'Hold or Sell?', desc: 'SELL now to lock in your current asset value. HOLD and gamble — the market may swing up or down before the final reveal!' },
-    { phase: '05', emoji: '🏆', title: 'Leaderboard', desc: 'Final scores are revealed. The player with the most $AXIOS wins. You\'ll also be able to download & share your unique NFT card.' },
+    { phase: '04', emoji: '🏆', title: 'Leaderboard', desc: 'Final scores are revealed. The player with the most $AXIOS wins. You\'ll also be able to download & share your unique NFT card.' },
   ];
 
   return (
@@ -219,64 +218,6 @@ function MarketEventScreen({ event, playerData }: { event: any; playerData: any 
   );
 }
 
-// ─── DECISION SCREEN ─────────────────────────────────────────────────────────
-function DecisionScreen({ playerData, onAction }: { playerData: any; onAction: (a: string) => void }) {
-  if (playerData.actionTaken) {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', padding: '40px 20px', textAlign: 'center' }}>
-        <div style={{ fontSize: '3rem', marginBottom: '16px' }}>
-          {playerData.actionTaken === 'HOLD' ? '💎' : '💵'}
-        </div>
-        <h2 style={{ fontSize: '1.6rem', fontWeight: 900, marginBottom: '8px' }}>
-          You chose to <span className="gradient-text">{playerData.actionTaken}</span>
-        </h2>
-        <p className="text-sm text-muted">Waiting for all players to decide...</p>
-      </div>
-    );
-  }
-
-  return (
-    <div style={{ padding: '32px 20px', animation: 'fadeIn 0.5s ease-out' }}>
-      <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-        <div className="text-xs text-dim" style={{ textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: '8px' }}>Current Value</div>
-        <div style={{ fontSize: '3.5rem', fontWeight: 900, lineHeight: 1 }}>
-          <span className="gradient-text">{(playerData.score || 0).toLocaleString()}</span>
-        </div>
-        <div style={{ color: 'var(--gold)', fontWeight: 700, marginTop: '4px' }}>$AXIOS</div>
-      </div>
-
-      {playerData.asset && (
-        <div style={{ marginBottom: '28px' }}>
-          <AssetCard compact
-            core={playerData.asset.core}
-            traits={playerData.asset.traits}
-            username={playerData.username}
-            web3Address={playerData.web3Address}
-          />
-        </div>
-      )}
-
-      <div className="glass" style={{ padding: '16px 20px', borderRadius: '12px', marginBottom: '24px' }}>
-        <p style={{ fontSize: '0.9rem', color: 'var(--text-2)', textAlign: 'center', lineHeight: 1.6 }}>
-          <strong style={{ color: 'var(--text)' }}>SELL</strong> now to lock in your current value.<br />
-          <strong style={{ color: 'var(--text)' }}>HOLD</strong> to gamble on the final market — value may go up or down.
-        </p>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-        <button className="btn btn-danger btn-lg" onClick={() => onAction('SELL')} style={{ flexDirection: 'column', gap: '4px', height: '80px' }}>
-          <span style={{ fontSize: '1.5rem' }}>💵</span>
-          <span>SELL</span>
-        </button>
-        <button className="btn btn-primary btn-lg" onClick={() => onAction('HOLD')} style={{ flexDirection: 'column', gap: '4px', height: '80px' }}>
-          <span style={{ fontSize: '1.5rem' }}>💎</span>
-          <span>HOLD</span>
-        </button>
-      </div>
-    </div>
-  );
-}
-
 // ─── LEADERBOARD SCREEN ───────────────────────────────────────────────────────
 function LeaderboardScreen({ leaderboard, username, playerData, onShare }: { leaderboard: any[]; username: string; playerData: any; onShare: () => void }) {
   const sorted = leaderboard; // Already sorted by API
@@ -463,13 +404,7 @@ export default function PlayPage() {
     }
   }, []);
 
-  // Handle hold/sell action — use ref so no stale closure on playerData
-  const handleAction = useCallback((action: string) => {
-    if (socket && playerDataRef.current) {
-      socket.emit('playerAction', { roomId, username: playerDataRef.current.username, actionTaken: action });
-    }
-  }, [socket, roomId]);
-
+  
   // Handle mint — use ref so no stale closure
   const handleMint = useCallback((asset: any) => {
     if (socket && playerDataRef.current) {
@@ -499,7 +434,7 @@ export default function PlayPage() {
         // When MINTING starts, immediately clear local asset so MintingPhase shows
         if (status === 'MINTING') {
           setShowCountdown(true);
-          setPlayerData((prev: any) => prev ? { ...prev, asset: null, score: 0, actionTaken: null } : prev);
+          setPlayerData((prev: any) => prev ? { ...prev, asset: null, score: 0 } : prev);
         }
         setGamePhase(status as GamePhase);
         if (status === 'LEADERBOARD') {
@@ -511,16 +446,12 @@ export default function PlayPage() {
       if (event) setMarketEvent(event);
     };
     const onAssetMinted = (data: any) => setPlayerData(data);
-    const onActionConfirmed = (data: any) => setPlayerData(data);
-
     socket.on('gameError', onError);
     socket.on('joined', onJoined);
     socket.on('playerCountUpdate', onPlayerCount);
     socket.on('playerDataUpdate', onPlayerDataUpdate);
     socket.on('gameStateUpdate', onGameState);
     socket.on('assetMinted', onAssetMinted);
-    socket.on('actionConfirmed', onActionConfirmed);
-
     // Emit join (handles both first join and reconnection)
     socket.emit('joinRoom', { roomId, username, web3Address });
 
@@ -531,8 +462,7 @@ export default function PlayPage() {
       socket.off('playerDataUpdate', onPlayerDataUpdate);
       socket.off('gameStateUpdate', onGameState);
       socket.off('assetMinted', onAssetMinted);
-      socket.off('actionConfirmed', onActionConfirmed);
-    };
+      };
   }, [socket, isConnected, roomId]);
 
   // Error screen

@@ -94,6 +94,22 @@ function applyMarketEvent(score: number, asset: { core: string; traits: string[]
     case 'VOID_UP':
       if (asset.core === 'VOID') return Math.floor(score * 1.5);
       break;
+    case 'ENERGY_SURGE':
+      if (asset.core === 'ENERGY') return Math.floor(score * 1.4);
+      break;
+    case 'ICE_FREEZE':
+      if (asset.core === 'ICE') return Math.floor(score * 1.3);
+      break;
+    case 'CROWN_HYPE':
+      if (asset.traits.includes('Crown')) return Math.floor(score * 1.5);
+      break;
+    case 'ARMOR_UP':
+      if (asset.traits.includes('Cyber Armor')) return score + 500;
+      break;
+    case 'MARKET_CRASH':
+      return Math.floor(score * 0.85); // Everyone drops 15%
+    case 'STIMULUS':
+      return Math.floor(score * 1.2); // Everyone gains 20%
   }
   return score;
 }
@@ -353,33 +369,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  // PLAYER: hold or sell
-  socket.on('playerAction', async ({ roomId, username, actionTaken }: { roomId: string; username: string; actionTaken: string }) => {
-    try {
-      const cleanId = roomId.toUpperCase().trim();
-      const player = await Player.findOne({ roomId: cleanId, username });
-      if (!player) return;
 
-      let finalValue = player.score;
-      if (actionTaken === 'HOLD') {
-        // Random final market swing: ±20%
-        const swing = 0.8 + Math.random() * 0.4;
-        finalValue = Math.floor(player.score * swing);
-      }
-      // SELL = lock in current score
-
-      const updated = await Player.findOneAndUpdate(
-        { roomId: cleanId, username },
-        { actionTaken, finalValue, score: finalValue },
-        { returnDocument: 'after' }
-      );
-
-      socket.emit('actionConfirmed', updated!.toObject());
-      const players = await broadcastPlayerUpdates(cleanId);
-    } catch (err) {
-      console.error('playerAction error:', err);
-    }
-  });
 
   // Disconnect
   socket.on('disconnect', async () => {

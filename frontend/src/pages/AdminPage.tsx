@@ -6,7 +6,6 @@ const PHASES = [
   { key: 'LOBBY',        label: 'Lobby',        emoji: '🏠', desc: 'Players join' },
   { key: 'MINTING',      label: 'Minting',       emoji: '🎨', desc: 'Create assets' },
   { key: 'MARKET_EVENT', label: 'Market Event',  emoji: '⚡', desc: 'Prices shift' },
-  { key: 'DECISION',     label: 'Hold/Sell',     emoji: '💎', desc: 'Players decide' },
   { key: 'LEADERBOARD',  label: 'Leaderboard',   emoji: '🏆', desc: 'Rankings reveal' },
   { key: 'REVEAL',       label: 'Web3 Reveal',   emoji: '🌐', desc: 'The big reveal' },
 ];
@@ -17,6 +16,12 @@ const MARKET_EVENTS = [
   { id: 'FIRE_BONUS', label: '🔥 FIRE Core → +25% Bonus',  message: 'FIRE CORE ASSETS GET A 25% VALUE BONUS!' },
   { id: 'VOID_UP',    label: '🌑 VOID Core → 1.5× Value',  message: 'VOID CORE SURGES — SCARCITY CREATES VALUE!' },
   { id: 'COMMON_DOWN',label: '📉 Common Traits Lose Value', message: 'COMMON TRAITS ARE LOSING VALUE FAST!' },
+  { id: 'ENERGY_SURGE', label: '🔋 ENERGY Core → +40% Bonus', message: 'ENERGY CORE ASSETS POWER UP WITH A 40% BONUS!' },
+  { id: 'ICE_FREEZE',   label: '❄ ICE Core → +30% Bonus',    message: 'ICE CORE DEMAND RISES, GAINING 30% BONUS!' },
+  { id: 'CROWN_HYPE',   label: '👑 CROWN Trait → 1.5× Value', message: 'ROYALTY! CROWN TRAITS ARE IN HUGE DEMAND!' },
+  { id: 'ARMOR_UP',     label: '🛡 ARMOR Trait → +500 PTS',   message: 'CYBER ARMOR BECOMES ESSENTIAL! +500 FLAT BONUS!' },
+  { id: 'MARKET_CRASH', label: '📉 MARKET CRASH → -15% All',  message: 'TOTAL MARKET CRASH! ALL ASSETS LOSE 15% VALUE!' },
+  { id: 'STIMULUS',     label: '💰 STIMULUS → +20% All',      message: 'MARKET STIMULUS! ALL ASSETS GAIN 20% VALUE!' },
 ];
 
 export default function AdminPage() {
