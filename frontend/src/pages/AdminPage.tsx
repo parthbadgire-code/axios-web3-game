@@ -28,6 +28,8 @@ export default function AdminPage() {
   const [roomCreated, setRoomCreated] = useState(false);
   const [showQRFullscreen, setShowQRFullscreen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(MARKET_EVENTS[0]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
 
   useEffect(() => {
     if (!socket) return;
@@ -115,6 +117,43 @@ export default function AdminPage() {
     return rarities.indexOf(b.asset.rarity) - rarities.indexOf(a.asset.rarity);
   })[0];
   const fastest = players.filter(p => p.mintedAt).sort((a, b) => new Date(a.mintedAt).getTime() - new Date(b.mintedAt).getTime())[0];
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    const adminPass = import.meta.env.VITE_ADMIN_PASSWORD || 'axios2026';
+    if (passwordInput === adminPass) {
+      setIsAuthenticated(true);
+    } else {
+      alert('Incorrect password');
+      setPasswordInput('');
+    }
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="page-center" style={{ textAlign: 'center' }}>
+        <div className="glass-elevated" style={{ padding: '40px 32px', maxWidth: '360px', width: '100%' }}>
+          <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🛡️</div>
+          <h2 style={{ marginBottom: '8px', fontSize: '1.5rem', fontWeight: 900, letterSpacing: '0.05em' }}>ADMIN PORTAL</h2>
+          <p className="text-sm text-muted" style={{ marginBottom: '24px' }}>Restricted access.</p>
+          <form onSubmit={handleLogin}>
+            <input 
+              type="password" 
+              className="input-field" 
+              placeholder="Enter password..." 
+              value={passwordInput} 
+              onChange={e => setPasswordInput(e.target.value)} 
+              style={{ marginBottom: '16px', textAlign: 'center', fontSize: '1.2rem', letterSpacing: '0.1em' }}
+              autoFocus
+            />
+            <button type="submit" className="btn btn-primary btn-full btn-lg">
+              AUTHENTICATE
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ minHeight: '100vh', position: 'relative', zIndex: 1, padding: '0' }}>
