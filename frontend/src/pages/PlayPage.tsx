@@ -24,44 +24,44 @@ function LobbyScreen({ username, playerCount }: { username: string; playerCount:
   ];
 
   return (
-    <div style={{ padding: '24px 20px 40px', animation: 'fadeIn 0.5s ease-out' }}>
+    <div style={{ padding: '32px 20px 48px', animation: 'fadeIn 0.5s ease-out' }}>
       {/* You're in header */}
-      <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-        <div style={{ fontSize: '2.5rem', marginBottom: '10px' }}>🎉</div>
-        <h1 style={{ fontSize: '2rem', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '8px' }}>YOU'RE IN!</h1>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.3)', borderRadius: '100px', padding: '6px 20px', marginBottom: '16px' }}>
-          <span style={{ color: 'var(--gold)', fontWeight: 700, fontSize: '1.05rem' }}>@{username}</span>
+      <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+        <div style={{ fontSize: '3rem', marginBottom: '12px' }}>🎉</div>
+        <h1 style={{ fontSize: '2.2rem', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '12px' }}>YOU'RE IN!</h1>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.3)', borderRadius: '100px', padding: '8px 24px', marginBottom: '24px' }}>
+          <span style={{ color: 'var(--gold)', fontWeight: 800, fontSize: '1.1rem' }}>@{username}</span>
         </div>
 
         {/* Live player count */}
-        <div className="glass" style={{ padding: '14px 24px', borderRadius: '12px', display: 'inline-flex', alignItems: 'center', gap: '16px' }}>
+        <div className="glass" style={{ padding: '16px 32px', borderRadius: '16px', display: 'inline-flex', alignItems: 'center', gap: '20px' }}>
           <div>
-            <div style={{ fontSize: '1.8rem', fontWeight: 900, color: 'var(--gold)', lineHeight: 1 }}>{playerCount}</div>
-            <div style={{ fontSize: '0.7rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Players</div>
+            <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--gold)', lineHeight: 1 }}>{playerCount}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.15em', marginTop: '4px' }}>Players</div>
           </div>
-          <div style={{ width: '1px', height: '32px', background: 'var(--border)' }} />
-          <div style={{ fontSize: '0.85rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+          <div style={{ width: '1.5px', height: '40px', background: 'var(--border)' }} />
+          <div style={{ fontSize: '0.9rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
             Waiting for host{dots}
           </div>
         </div>
       </div>
 
       {/* Game Instructions */}
-      <div style={{ marginBottom: '28px' }}>
-        <h2 style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--text-3)', marginBottom: '14px', fontWeight: 700 }}>
+      <div style={{ marginBottom: '36px' }}>
+        <h2 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--text-3)', marginBottom: '16px', fontWeight: 800 }}>
           📋 HOW TO PLAY
         </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {steps.map((s, i) => (
             <div key={s.phase} style={{
-              display: 'flex', gap: '14px', alignItems: 'flex-start',
+              display: 'flex', gap: '16px', alignItems: 'flex-start',
               background: 'var(--bg-card)',
               border: '1px solid var(--border)',
-              borderRadius: '14px',
-              padding: '14px 16px',
+              borderRadius: '16px',
+              padding: '16px 20px',
               animation: `slideIn ${0.1 + i * 0.08}s ease-out`,
             }}>
-              <div style={{ flexShrink: 0, width: '36px', height: '36px', background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem' }}>
+              <div style={{ flexShrink: 0, width: '40px', height: '40px', background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.2)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>
                 {s.emoji}
               </div>
               <div style={{ flex: 1 }}>
@@ -77,8 +77,8 @@ function LobbyScreen({ username, playerCount }: { username: string; playerCount:
       </div>
 
       {/* Quick rules */}
-      <div className="glass" style={{ padding: '16px 20px', borderRadius: '14px', marginBottom: '20px' }}>
-        <h3 style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-3)', marginBottom: '10px', fontWeight: 700 }}>⚡ Quick Rules</h3>
+      <div className="glass" style={{ padding: '20px 24px', borderRadius: '16px', marginBottom: '24px' }}>
+        <h3 style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--text-3)', marginBottom: '12px', fontWeight: 800 }}>⚡ Quick Rules</h3>
         <ul style={{ margin: 0, paddingLeft: '0', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px' }}>
           {[
             '💰 You start with 100 $AXIOS (in-game currency, no real value)',

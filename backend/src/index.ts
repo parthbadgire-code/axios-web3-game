@@ -193,25 +193,24 @@ io.on('connection', (socket) => {
 
       // Check duplicate username (allow reconnection by same username)
       const existing = await Player.findOne({ roomId: cleanId, username: cleanUsername });
-      if (existing && existing.socketId !== socket.id) {
-        // Reconnection - update socket ID
-        existing.socketId = socket.id;
-        existing.isOnline = true;
-        await existing.save();
+      if (existing) {
+        if (existing.web3Address !== web3Address) {
+          socket.emit('gameError', 'Username already taken in this room.');
+          return;
+        }
+
+        if (existing.socketId !== socket.id) {
+          // Reconnection - update socket ID
+          existing.socketId = socket.id;
+          existing.isOnline = true;
+          await existing.save();
+        }
+        
         socket.join(cleanId);
         socket.emit('joined', existing.toObject());
-        const players = await broadcastPlayerUpdates(cleanId);
+        await broadcastPlayerUpdates(cleanId);
         socket.emit('gameStateUpdate', { status: room.status, marketEvent: room.marketEvent });
         console.log(`🔄 Reconnected: ${cleanUsername}`);
-        return;
-      }
-
-      if (existing) {
-        // Same socket re-joining (e.g., PlayPage re-mount)
-        socket.join(cleanId);
-        socket.emit('joined', existing.toObject());
-        const players = await broadcastPlayerUpdates(cleanId);
-        socket.emit('gameStateUpdate', { status: room.status, marketEvent: room.marketEvent });
         return;
       }
 
