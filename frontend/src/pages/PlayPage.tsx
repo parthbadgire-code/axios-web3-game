@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSocket } from '../context/SocketContext';
 import MintingPhase from '../components/player/MintingPhase';
@@ -541,9 +541,7 @@ export default function PlayPage() {
         <MarketEventScreen event={marketEvent} playerData={playerData} />
       )}
 
-      {gamePhase === 'DECISION' && (
-        <DecisionScreen playerData={playerData} onAction={handleAction} />
-      )}
+
 
       {gamePhase === 'LEADERBOARD' && (
         <LeaderboardScreen

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import AssetCard from '../components/player/AssetCard';

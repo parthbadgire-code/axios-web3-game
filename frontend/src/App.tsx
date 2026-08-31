@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { SocketProvider } from './context/SocketContext';
 import LandingPage from './pages/LandingPage';

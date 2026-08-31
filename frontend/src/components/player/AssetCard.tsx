@@ -1,4 +1,3 @@
-import React from 'react';
 
 interface AssetCardProps {
   core: string;
@@ -140,7 +139,7 @@ export default function AssetCard({ core, traits, username, web3Address, uniqueI
 
           {/* Trait Badges */}
           <div style={{ position: 'absolute', right: '16px', top: '16px', display: 'flex', flexDirection: 'column', gap: '8px', zIndex: 15 }}>
-            {traits.map((t, i) => (
+            {traits.map((t) => (
               <div key={t} style={{
                 background: 'rgba(5,3,2,0.85)',
                 backdropFilter: 'blur(12px)',
