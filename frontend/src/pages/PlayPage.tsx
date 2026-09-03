@@ -278,6 +278,7 @@ function LeaderboardScreen({ leaderboard, username, playerData, onShare }: { lea
             </div>
           </div>
         ))}
+      </div>
     </div>
   );
 }
