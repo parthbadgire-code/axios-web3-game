@@ -239,6 +239,14 @@ function LeaderboardScreen({ leaderboard, username, playerData, onShare }: { lea
         )}
       </div>
 
+      {playerData?.asset?.uniqueId && (
+        <div style={{ marginBottom: '24px' }}>
+          <button className="btn btn-success btn-full btn-lg animate-glow" onClick={onShare} style={{ padding: '16px', fontSize: '1rem', fontWeight: 800 }}>
+            VIEW & SHARE YOUR ASSET 🔗
+          </button>
+        </div>
+      )}
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '28px' }}>
         {sorted.slice(0, 10).map((p, i) => (
           <div key={p.username} style={{
@@ -270,13 +278,6 @@ function LeaderboardScreen({ leaderboard, username, playerData, onShare }: { lea
             </div>
           </div>
         ))}
-      </div>
-
-      {playerData?.asset?.uniqueId && (
-        <button className="btn btn-success btn-full btn-lg" onClick={onShare}>
-          VIEW & SHARE YOUR ASSET 🔗
-        </button>
-      )}
     </div>
   );
 }
